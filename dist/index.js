@@ -250,6 +250,7 @@ class TestReporter {
         this.token = core.getInput('token', { required: true });
         this.context = github_utils_1.getCheckRunContext();
         this.octokit = github.getOctokit(this.token);
+        this.check_id = core.getInput('check_run_id', {required: true});
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
             core.setFailed(`Input parameter 'list-suites' has invalid value`);
             return;
