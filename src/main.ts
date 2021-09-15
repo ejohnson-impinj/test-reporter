@@ -44,6 +44,7 @@ class TestReporter {
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
+  readonly check_id = core.getInput('check_run_id', {required: true});
 
   constructor() {
     this.octokit = github.getOctokit(this.token)
@@ -179,7 +180,7 @@ class TestReporter {
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
     const resp = await this.octokit.checks.update({
-      check_run_id: createResp.data.id,
+      check_run_id: this.check_id,
       conclusion,
       status: 'completed',
       output: {
